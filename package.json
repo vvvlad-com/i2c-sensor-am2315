@@ -1,0 +1,54 @@
+{
+  "name": "i2c-sensor-am2315",
+  "version": "0.1.0",
+  "description": "I2C communication driver for the AOSONG AM2315 temperature and humidity sensor.",
+  "license": "MIT",
+  "author": {
+    "name": "Vlad Vlasceanu",
+    "url": "https://vvvlad.com/"
+  },
+  "maintainers": [
+    {
+      "name": "Vlad Vlasceanu",
+      "url": "https://vvvlad.com/"
+    }
+  ],
+  "contributors": [
+    {
+      "name": "Vlad Vlasceanu",
+      "url": "https://vvvlad.com/"
+    }
+  ],
+  "homepage": "https://github.com/vvvlad-com/i2c-sensor-am2315",
+  "keywords": [
+    "i2c",
+    "am2315",
+    "sensor",
+    "aosong",
+    "temperature",
+    "humidity",
+    "driver"
+  ],
+  "main": "driver.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvvlad-com/i2c-sensor-am2315.git"
+  },
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {},
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "dependencies": {
+	"i2c-bus": "1.0.1",
+    "crc": "3.3.0"
+  },
+  "devDependencies": {
+    "mockery": "1.4.0",
+    "tape": "4.4.0",
+	"faucet": "0.0.1"
+  }
+}
