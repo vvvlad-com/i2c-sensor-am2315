@@ -1,5 +1,7 @@
 # I2C Driver for Sensor AM2315
 
+[![Build Status](https://travis-ci.org/vvvlad-com/i2c-sensor-am2315.svg?branch=master)](https://travis-ci.org/vvvlad-com/i2c-sensor-am2315)
+
 I2C communication driver for the AOSONG AM2315 temperature and humidity sensor.
 
 ## Installation
