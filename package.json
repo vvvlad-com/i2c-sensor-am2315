@@ -39,7 +39,7 @@
     "test": "tests"
   },
   "scripts": {
-	  "test": "node tests/driver"
+	  "test": "node tests/driver.js | node_modules/.bin/faucet"
   },
   "engines": {
     "node": ">=0.8.0"
