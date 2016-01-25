@@ -1,6 +1,9 @@
 # I2C Driver for Sensor AM2315
 
 [![Build Status](https://travis-ci.org/vvvlad-com/i2c-sensor-am2315.svg?branch=master)](https://travis-ci.org/vvvlad-com/i2c-sensor-am2315)
+[![Git Issues](https://img.shields.io/github/issues/vvvlad-com/i2c-sensor-am2315.svg?style=flat)](https://github.com/vvvlad-com/i2c-sensor-am2315)
+[![NPM Downloads](https://img.shields.io/npm/dt/i2c-sensor-am2315.svg?style=flat)](https://www.npmjs.com/package/i2c-sensor-am2315)
+[![Current Version](https://img.shields.io/npm/v/i2c-sensor-am2315.svg?style=flat)](https://www.npmjs.com/package/i2c-sensor-am2315)
 
 I2C communication driver for the AOSONG AM2315 temperature and humidity sensor.
 
