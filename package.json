@@ -1,6 +1,6 @@
 {
   "name": "i2c-sensor-am2315",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "I2C communication driver for the AOSONG AM2315 temperature and humidity sensor.",
   "license": "MIT",
   "author": {
