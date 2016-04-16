@@ -48,18 +48,18 @@ module.exports = function () {
 		convertKelvinToCelsius: function(input) {
 			// output
 			var output;
-			
+
 			// the entire output array was passed?
 			if (input.temperature !== undefined && input.temperatureUnit !== undefined) {
 				// clone the object so we leave the input intact
 				output = JSON.parse(JSON.stringify(input));
-				
+
 				// is it a °F unit?
 				if (input.temperatureUnit === '°F') {
 					output.temperatureUnit = 'K';
 					output.temperature = this.convertFahrenheitToKelvin(input.temperature);
 				}
-				
+
 				// convert units
 				if (output.temperatureUnit === 'K') {
 					output.temperatureUnit = '°C';
@@ -69,25 +69,25 @@ module.exports = function () {
 				// convert value
 				output = Math.round((input - 273.15) * 100) / 100;
 			}
-			
+
 			// return
 			return output;
 		},
 		convertKelvinToFahrenheit: function(input) {
 			// output
 			var output;
-			
+
 			// the entire output array was passed?
 			if (input.temperature !== undefined && input.temperatureUnit !== undefined) {
 				// clone the object so we leave the input intact
 				output = JSON.parse(JSON.stringify(input));
-				
+
 				// is it a °C unit?
 				if (input.temperatureUnit === '°C') {
 					output.temperatureUnit = 'K';
 					output.temperature = this.convertCelsiusToKelvin(input.temperature);
 				}
-				
+
 				// convert units
 				if (output.temperatureUnit === 'K') {
 					output.temperatureUnit = '°F';
@@ -97,25 +97,25 @@ module.exports = function () {
 				// convert value
 				output = Math.round(((input * 9/5) - 459.67) * 100) / 100;
 			}
-			
+
 			// return
 			return output;
 		},
 		convertFahrenheitToCelsius: function(input) {
 			// output
 			var output;
-			
+
 			// the entire output array was passed?
 			if (input.temperature !== undefined && input.temperatureUnit !== undefined) {
 				// clone the object so we leave the input intact
 				output = JSON.parse(JSON.stringify(input));
-				
+
 				// is it a K unit?
 				if (input.temperatureUnit === 'K') {
 					output.temperatureUnit = '°F';
 					output.temperature = this.convertKelvinToFahrenheit(input.temperature);
 				}
-				
+
 				// convert units
 				if (output.temperatureUnit === '°F') {
 					output.temperatureUnit = '°C';
@@ -125,25 +125,25 @@ module.exports = function () {
 				// convert value
 				output = Math.round(((input - 32) * (5/9)) * 100) / 100;
 			}
-			
+
 			// return
 			return output;
 		},
 		convertFahrenheitToKelvin: function(input) {
 			// output
 			var output;
-			
+
 			// the entire output array was passed?
 			if (input.temperature !== undefined && input.temperatureUnit !== undefined) {
 				// clone the object so we leave the input intact
 				output = JSON.parse(JSON.stringify(input));
-				
+
 				// is it a K unit?
 				if (input.temperatureUnit === '°C') {
 					output.temperatureUnit = '°F';
 					output.temperature = this.convertCelsiusToFahrenheit(input.temperature);
 				}
-				
+
 				// convert units
 				if (output.temperatureUnit === '°F') {
 					output.temperatureUnit = 'K';
@@ -153,25 +153,25 @@ module.exports = function () {
 				// convert value
 				output = Math.round(((input + 459.67) * (5/9)) * 100) / 100;
 			}
-			
+
 			// return
 			return output;
 		},
 		convertCelsiusToKelvin: function(input) {
 			// output
 			var output;
-			
+
 			// the entire output array was passed?
 			if (input.temperature !== undefined && input.temperatureUnit !== undefined) {
 				// clone the object so we leave the input intact
 				output = JSON.parse(JSON.stringify(input));
-				
+
 				// is it a K unit?
 				if (input.temperatureUnit === '°F') {
 					output.temperatureUnit = '°C';
 					output.temperature = this.convertCelsiusToFahrenheit(input.temperature);
 				}
-				
+
 				// convert units
 				if (output.temperatureUnit === '°C') {
 					output.temperatureUnit = 'K';
@@ -181,25 +181,25 @@ module.exports = function () {
 				// convert value
 				output = Math.round((input + 273.15) * 100) / 100;
 			}
-			
+
 			// return
 			return output;
 		},
 		convertCelsiusToFahrenheit: function(input) {
 			// output
 			var output;
-			
+
 			// the entire output array was passed?
 			if (input.temperature !== undefined && input.temperatureUnit !== undefined) {
 				// clone the object so we leave the input intact
 				output = JSON.parse(JSON.stringify(input));
-				
+
 				// is it a K unit?
 				if (input.temperatureUnit === 'K') {
 					output.temperatureUnit = '°C';
 					output.temperature = this.convertKelvinToFahrenheit(input.temperature);
 				}
-				
+
 				// convert units
 				if (output.temperatureUnit === '°C') {
 					output.temperatureUnit = '°F';
@@ -209,7 +209,7 @@ module.exports = function () {
 				// convert value
 				output = Math.round(((input * (9/5)) + 32) * 100) / 100;
 			}
-			
+
 			// return
 			return output;
 		},
@@ -237,7 +237,7 @@ module.exports = function () {
 						} else {
 							// log info
 							if (that.config.debugMode) { console.log(devices); }
-							
+
 							// wait ~900 us
 							setTimeout(function() {
 								// write to the bus (read command register, start register, and read 4 bytes
@@ -251,7 +251,7 @@ module.exports = function () {
 									} else {
 										// log info
 										if (that.config.debugMode) { console.log(buffer); }
-										
+
 										// wait 10 ms
 										setTimeout(function() {
 											// read from the bus
@@ -265,7 +265,32 @@ module.exports = function () {
 												} else {
 													// log info
 													if (that.config.debugMode) { console.log(buffer); }
-													
+
+													// prepare output per http://www.switchdoc.com/wp-content/uploads/2015/07/AM2315-3.pdf
+													var output = {
+														temperature: that.calcTemperature(buffer[4], buffer[5]),
+														temperatureUnit: 'K',
+														humidity: that.calcHumidity(buffer[2], buffer[3]),
+														humidityUnit: '%RH',
+														crcCheck: (((buffer[7] << 8) + buffer[6]) == that.calcCRC(buffer)),
+														validReading: false
+													};
+
+													// perform a sanity check on the reading (CRC is valid)
+													if (output.crcCheck) {
+														// humidity is a percentage so 100 or less
+														if (output.humidity >= 0 && output.humidity <= 100) {
+															// temperature rating is -40 to 125 Celsius
+															if (output.temperature >= (273.15 - 40) && output.temperature <= (273.15 + 125)) {
+																// zero temp and humidity is likely a reading error (null)
+																if (!(output.humidity == 0 && output.temperature == 273.15)) {
+																	// mark reading as valid
+																	output.validReading = true;
+																}
+															}
+														}
+													}
+
 													// close the bus
 													i2cBus.close(function (err) {
 														if (err) {
@@ -275,17 +300,14 @@ module.exports = function () {
 															// callback
 															callback(err, null);
 														} else {
-															// prepare output per http://www.switchdoc.com/wp-content/uploads/2015/07/AM2315-3.pdf
-															var output = {
-																temperature: that.calcTemperature(buffer[4], buffer[5]),
-																temperatureUnit: 'K',
-																humidity: that.calcHumidity(buffer[2], buffer[3]),
-																humidityUnit: '%RH',
-																crcCheck: (((buffer[7] << 8) + buffer[6]) == that.calcCRC(buffer))
-															};
-
-															// callback
-															callback(null, output);
+															// is the reading valid
+															if (output.validReading) {
+																// success callback
+																callback(null, output);
+															} else {
+																// error callback
+																callback('Reading is invalid', output);
+															}
 														}
 													});
 												}
@@ -301,4 +323,3 @@ module.exports = function () {
 		}
 	};
 };
-
