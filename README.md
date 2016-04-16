@@ -55,13 +55,15 @@ Result:
 	  temperatureUnit: 'K',
 	  humidity: 36.3,
 	  humidityUnit: '%RH',
-	  crcCheck: true }
+	  crcCheck: true,
+	  validReading: true }
 	Convert K to °F
 	{ temperature: 73.58,
 	  temperatureUnit: '°F',
 	  humidity: 36.3,
 	  humidityUnit: '%RH',
-	  crcCheck: true }
+	  crcCheck: true,
+	  validReading: true }
 
 ## Conversions
 
@@ -88,7 +90,7 @@ Default is 1 - the default I2C bus on the majority of Raspeberry Pi devices. Use
 
 	// create device
 	var device = new Driver;
-	
+
 	// set to bus 0 (older Raspberry Pi devices)
 	device.setI2cBusNumber(0);
 
