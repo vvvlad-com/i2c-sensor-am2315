@@ -45,8 +45,8 @@
     "node": ">=0.8.0"
   },
   "dependencies": {
-	"i2c-bus": "1.0.1",
-    "crc": "3.3.0"
+	"i2c-bus": "1.0.3",
+    "crc": "3.4.0"
   },
   "devDependencies": {
     "mockery": "1.4.0",
