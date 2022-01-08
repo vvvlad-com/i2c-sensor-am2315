@@ -20,7 +20,7 @@ var i2cBusStub = {
 		callback(null, 3, buffer);
 	},
 	i2cRead: function(address, bytes, buffer, callback) {
-		callback(null, 8, new Buffer([0x03, 0x04, 0x03, 0x39, 0x01, 0x15, 0xE1, 0xFE]));
+		callback(null, 8, Buffer.from([0x03, 0x04, 0x03, 0x39, 0x01, 0x15, 0xE1, 0xFE]));
 	}
 };
 
@@ -244,7 +244,7 @@ tape('test i2c-sensor-am2315.calcCRC() ', function(assert) {
 	device = new driver;
 
 	// read buffer
-	buffer = new Buffer([0x03, 0x04, 0x03, 0x39, 0x01, 0x15, 0xE1, 0xFE]);
+	buffer = Buffer.from([0x03, 0x04, 0x03, 0x39, 0x01, 0x15, 0xE1, 0xFE]);
 
 	// assert equal
 	assert.equal(device.calcCRC(buffer), ((buffer[7] << 8) + buffer[6]));
@@ -519,6 +519,39 @@ tape('test i2c-sensor-am2315.read() ', function(assert) {
 	device.read(function(err, result) {
 		assert.deepEqual(result, { temperature: 300.85, temperatureUnit: 'K', humidity: 82.5, humidityUnit: '%RH', crcCheck: true, validReading: true });
 	});
+
+	// disable mockery
+	mockery.disable();
+
+	// end assertion
+	assert.end();
+});
+
+
+// test
+tape('test i2c-sensor-am2315.readAsync() ', async function(assert) {
+	// use sinon to stub out
+	var device, driver, data;
+
+	// enable mockery
+	mockery.enable({
+		warnOnReplace: false,
+		warnOnUnregistered: false,
+		useCleanCache: true
+	});
+
+	// replace the module `i2c-bus` with a stub object
+	mockery.registerMock('i2c-bus', i2cBusStub);
+
+	// now require the code to be tested
+	driver = require('../driver');
+
+	// create device
+	device = new driver;
+
+	// read the device
+	var data = await device.readAsync();
+	assert.deepEqual(data, { temperature: 300.85, temperatureUnit: 'K', humidity: 82.5, humidityUnit: '%RH', crcCheck: true, validReading: true });
 
 	// disable mockery
 	mockery.disable();
